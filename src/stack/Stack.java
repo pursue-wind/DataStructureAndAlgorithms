@@ -2,7 +2,7 @@ package stack;
 
 /**
  * @program: DataStructureAndAlgorithms
- * @description: 栈
+ * @description: 栈 栈的应用_undo操作_系统调用栈_括号匹配
  * @author: mirrorming
  * @create: 2018-12-25 14:35
  **/
