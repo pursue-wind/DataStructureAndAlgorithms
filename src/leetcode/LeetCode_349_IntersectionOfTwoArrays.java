@@ -9,7 +9,7 @@ import java.util.HashSet;
  * @create: 2018-12-27 16:32
  **/
 
-public class leetcode_349_IntersectionOfTwoArrays {
+public class LeetCode_349_IntersectionOfTwoArrays {
     public int[] intersection(int[] nums1, int[] nums2) {
         HashSet<Integer> record = new HashSet<Integer>();
         HashSet<Integer> retSet = new HashSet<Integer>();
@@ -28,7 +28,7 @@ public class leetcode_349_IntersectionOfTwoArrays {
     public static void main(String[] args) {
         int[] nums1 = {1, 2, 2, 1};
         int[] nums2 = {2, 2};
-        System.out.println(new leetcode_349_IntersectionOfTwoArrays().intersection(nums1, nums2));
+        System.out.println(new LeetCode_349_IntersectionOfTwoArrays().intersection(nums1, nums2));
 
     }
 }

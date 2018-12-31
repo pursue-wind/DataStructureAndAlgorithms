@@ -1,6 +1,6 @@
-package stack;
+package leetcode;
 
-import java.util.Stack;
+import stack.ArrayStack;
 
 /**
  * @program: DataStructureAndAlgorithms
@@ -9,9 +9,9 @@ import java.util.Stack;
  * @create: 2018-12-25 15:31
  **/
 
-public class leetcode_20_ValidParentheses {
+public class LeetCode_20_ValidParentheses {
     public boolean isValid(String s) {
-        Stack<Character> stack = new Stack<>();
+        ArrayStack<Character> stack = new ArrayStack<>();
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (c == '{' || c == '[' || c == '(')
@@ -29,5 +29,11 @@ public class leetcode_20_ValidParentheses {
             }
         }
         return stack.isEmpty();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new LeetCode_20_ValidParentheses().isValid("{}[]()"));
+        System.out.println(new LeetCode_20_ValidParentheses().isValid("{[]()}"));
+        System.out.println(new LeetCode_20_ValidParentheses().isValid("{[]([)}"));
     }
 }
