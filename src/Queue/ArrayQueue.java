@@ -1,6 +1,6 @@
-package queue;
+package Queue;
 
-import array.Array;
+import Array.Array;
 
 /**
  * @program: DataStructureAndAlgorithms

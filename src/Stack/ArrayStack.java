@@ -1,6 +1,6 @@
-package stack;
+package Stack;
 
-import array.Array;
+import Array.Array;
 
 /**
  * @program: DataStructureAndAlgorithms
@@ -66,11 +66,11 @@ public class ArrayStack<E> implements Stack<E> {
     public String toString() {
         StringBuffer sb = new StringBuffer("ArrayStack:[");
         for (int i = 0; i < array.getSize(); i++) {
-            sb.append(i);
+            sb.append(array.get(i));
             if (i != array.getSize() - 1)
                 sb.append(",");
         }
-        sb.append("] tops");
+        sb.append("] Top");
         return sb.toString();
     }
 }

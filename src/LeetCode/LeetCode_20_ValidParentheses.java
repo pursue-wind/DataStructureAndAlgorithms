@@ -1,6 +1,6 @@
-package leetcode;
+package LeetCode;
 
-import stack.ArrayStack;
+import Stack.ArrayStack;
 
 /**
  * @program: DataStructureAndAlgorithms
