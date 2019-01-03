@@ -1,6 +1,6 @@
-package stack;
+package Stack;
 
-import array.Array;
+import java.util.Random;
 
 /**
  * @program: DataStructureAndAlgorithms
@@ -10,13 +10,24 @@ import array.Array;
  **/
 
 public class Client {
+
+    public static double testStack(Stack<Integer> stack, int count) {
+        long startTime = System.nanoTime();
+        Random random = new Random();
+        for (int i = 0; i < count; i++)
+            stack.push(random.nextInt(Integer.MAX_VALUE));
+        for (int i = 0; i < count; i++)
+            stack.pop();
+        long endTime = System.nanoTime();
+        return (endTime - startTime) / 1000000000.0;
+    }
+
     public static void main(String[] args) {
-        ArrayStack<Integer> as = new ArrayStack<Integer>();
-        for (int i = 1; i < 6; i++) {
-            as.push(i);
-        }
-        System.out.println(as);
-        as.pop();
-        System.out.println(as);
+        int opCount = 1000000;
+        Stack<Integer> stack1 = new ArrayStack();
+        double time1 = testStack(stack1, opCount);
+        Stack<Integer> stack2 = new LinkedListStack();
+        double time2 = testStack(stack2, opCount);
+        System.out.println(String.format("ArrayStack: %s \nLinkedListStack: %s", time1, time2));
     }
 }
