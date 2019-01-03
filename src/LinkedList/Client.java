@@ -9,7 +9,7 @@ package LinkedList;
 
 public class Client {
     public static void main(String[] args) {
-        LinkedList<Integer> linkedList = new LinkedList<>();
+        LinkedList<Integer> linkedList = new LinkedList<Integer>();
         for (int i = 0; i < 9; i++) {
             linkedList.addFirst(i);
             System.out.println(linkedList);
