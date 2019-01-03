@@ -1,4 +1,4 @@
-package array;
+package Array;
 
 import java.util.Arrays;
 
@@ -55,7 +55,7 @@ public class Array<E> {
      * @return: boolean
      */
     public boolean isEmpty() {
-        return data.length == 0;
+        return size == 0;
     }
 
     /**
@@ -190,7 +190,7 @@ public class Array<E> {
      * @return: E
      */
     public E removeLast() {
-        return remove(size);
+        return remove(size - 1);
     }
 
     public void removeElement(E e) {
