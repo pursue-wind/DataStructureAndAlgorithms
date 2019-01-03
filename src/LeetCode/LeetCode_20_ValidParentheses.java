@@ -11,7 +11,7 @@ import Stack.ArrayStack;
 
 public class LeetCode_20_ValidParentheses {
     public boolean isValid(String s) {
-        ArrayStack<Character> stack = new ArrayStack<>();
+        ArrayStack<Character> stack = new ArrayStack<Character>();
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
             if (c == '{' || c == '[' || c == '(')
