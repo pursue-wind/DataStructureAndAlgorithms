@@ -12,9 +12,9 @@ public interface Set<E> {
 
     void remove(E e);
 
-    boolean isEmpty(E e);
+    boolean isEmpty();
 
-    boolean contains();
+    boolean contains(E e);
 
     int getSize();
 }
