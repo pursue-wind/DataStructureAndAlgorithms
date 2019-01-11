@@ -1,9 +1,5 @@
 package SegmentTree;
 
-import Array.Array;
-
-import java.util.Arrays;
-
 /**
  * @program: DataStructureAndAlgorithms
  * @description: 线段树
