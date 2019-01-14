@@ -25,5 +25,8 @@ public class Client {
         System.out.println(segmentTree.query(2, 7));
         System.out.println(segmentTree.query(1, 5));
         System.out.println(segmentTree.query(0, 2));
+
+        segmentTree.set(1, 7);
+        System.out.println(segmentTree);
     }
 }
