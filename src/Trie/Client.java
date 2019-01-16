@@ -5,6 +5,7 @@ import SetAndMap.BSTSet;
 import SetAndMap.FileOperation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * @program: DataStructureAndAlgorithms
@@ -20,12 +21,12 @@ public class Client {
         ArrayList<String> wordlist = new ArrayList();
         if (FileOperation.readFile("src/pride-and-prejudice.txt", wordlist)) {
             System.out.println("Total words: " + wordlist.size());
-            BSTSet<String> set1 = new BSTSet<>();
+            HashSet<String> set1 = new HashSet<>();
             for (String word : wordlist)
                 set1.add(word);
             for (String word : wordlist)
                 set1.contains(word);
-            System.out.println("Total different words: " + set1.getSize());
+            System.out.println("Total different words: " + set1.size());
 
         }
         System.out.println("BSTSet_time: " + (System.nanoTime() - startTime) / 1000000000.0);

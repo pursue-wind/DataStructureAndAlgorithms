@@ -7,6 +7,9 @@ import java.util.TreeMap;
  * @description: 字典树, 前缀树
  * @author: mirrorming
  * @create: 2019-01-14 12:35
+ * <p>
+ * 局限性: 空间浪费太大
+ * 待改进: 压缩字典树
  **/
 
 public class Trie {
@@ -72,5 +75,16 @@ public class Trie {
             cur = cur.next.get(c);
         }
         return cur.isWord;
+    }
+
+    public boolean isPrefix(String prefix) {
+        Node cur = root;
+        for (int i = 0; i < prefix.length(); i++) {
+            char c = prefix.charAt(i);
+            if (cur.next.get(c) == null)
+                return false;
+            cur = cur.next.get(c);
+        }
+        return true;
     }
 }
