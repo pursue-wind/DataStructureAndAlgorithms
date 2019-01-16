@@ -24,7 +24,7 @@ public class UnionFind1 implements UF {
 
     /**
      * @Description: 查找元素p对应的集合编号
-     * @Param: [index]
+     * @Param: [p]
      * @return: int
      */
     private int find(int p) {
