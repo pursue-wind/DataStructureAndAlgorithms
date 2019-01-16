@@ -2,7 +2,7 @@ package UnionFind;
 
 /**
  * @program: DataStructureAndAlgorithms
- * @description: 并查集
+ * @description: 并查集实现1
  * @author: mirrorming
  * @create: 2019-01-16 21:11
  **/
