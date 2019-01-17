@@ -2,19 +2,24 @@ package UnionFind;
 
 /**
  * @program: DataStructureAndAlgorithms
- * @description: 并查集实现2
+ * @description: 并查集_基于rank的优化
  * @author: mirrorming
- * @create: 2019-01-16 21:41
+ * @create: 2019-01-17 17:01
  **/
 
-public class UnionFind2 implements UF {
+public class UnionFind4 implements UF {
 
     private int[] parent;
+    private int[] rank;
 
-    public UnionFind2(int size) {
+    public UnionFind4(int size) {
         parent = new int[size];
-        for (int i = 0; i < size; i++)
+        rank = new int[size];
+
+        for (int i = 0; i < size; i++) {
             parent[i] = i;
+            rank[i] = 1;
+        }
     }
 
     @Override
@@ -30,8 +35,9 @@ public class UnionFind2 implements UF {
     private int find(int p) {
         if (p < 0 || p > parent.length)
             throw new IllegalArgumentException("index is out of bound~");
-        while (p != parent[p])
+        while (p != parent[p]) {
             p = parent[p];
+        }
         return p;
     }
 
@@ -51,13 +57,25 @@ public class UnionFind2 implements UF {
      */
     @Override
     public void union(int p, int q) {
-        //查找到p,q对应的根节点
+        //  查找到p,q对应的根节点
         int pRoot = find(p);
         int qRoot = find(q);
-        //如果p,q的根节点相同
+
+        //  如果p,q的根节点相同
         if (pRoot == qRoot)
             return;
-        //如果p,q的根节点不相同,让p的根节点指向q的根节点
-        parent[pRoot] = qRoot;
+
+        //  如果p,q的根节点不相同,比较,让层数低的指向层数高的
+
+        if (rank[pRoot] < rank[qRoot])  //  如果qRoot的层数更高
+            parent[pRoot] = qRoot;      //  让pRoot的指向qRoot
+
+        else if (rank[qRoot] < rank[pRoot]) //  如果qRoot的层数更高
+            parent[qRoot] = pRoot;          //  让qRoot的指向pRoot
+            //如果层数相等
+        else {  //  rank[pRoot] = rank[qRoot]
+            parent[qRoot] = pRoot;  //  让pRoot的指向qRoot
+            rank[pRoot] += 1;       //  让qRoot的层数加1
+        }
     }
 }
