@@ -10,15 +10,21 @@ import java.util.Random;
 
 public class Client {
     public static void main(String[] args) {
-        int size = 100000;
-        int m = 100000;
-        UnionFind1 uf1 = new UnionFind1(size);
-        UnionFind2 uf2 = new UnionFind2(size);
+        int size = 10000000;
+        int m = 10000000;
+//        UnionFind1 uf1 = new UnionFind1(size);
+//        UnionFind2 uf2 = new UnionFind2(size);
         UnionFind3 uf3 = new UnionFind3(size);
+        UnionFind4 uf4 = new UnionFind4(size);
+        UnionFind5 uf5 = new UnionFind5(size);
+        UnionFind6 uf6 = new UnionFind6(size);
 
-        System.out.println("uf1: " + testUF(uf1, m));
-        System.out.println("uf2: " + testUF(uf2, m));
+//        System.out.println("uf1: " + testUF(uf1, m));
+//        System.out.println("uf2: " + testUF(uf2, m));
         System.out.println("uf3: " + testUF(uf3, m));
+        System.out.println("uf4: " + testUF(uf4, m));
+        System.out.println("uf5: " + testUF(uf5, m));
+        System.out.println("uf6: " + testUF(uf6, m));
     }
 
     public static double testUF(UF uf, int m) {
