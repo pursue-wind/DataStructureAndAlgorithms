@@ -44,11 +44,7 @@ public class BST<E extends Comparable<E>> {
      * @Param: [e]
      */
     public void add(E e) {
-        if (root == null) {
-            root = new Node(e);
-            size++;
-        } else
-            add(root, e);
+        root = add(root, e);
     }
 
     /**
