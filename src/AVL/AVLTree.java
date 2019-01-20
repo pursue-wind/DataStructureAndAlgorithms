@@ -1,5 +1,6 @@
 package AVL;
 
+import java.time.Year;
 import java.util.*;
 
 /**
@@ -22,6 +23,18 @@ public class AVLTree<K extends Comparable<K>, V> {
             this.left = null;
             this.right = null;
             this.height = 1;
+        }
+
+        @Override
+        public String toString() {
+            final StringBuffer sb = new StringBuffer("Node{");
+            sb.append("key=").append(key);
+            sb.append(", value=").append(value);
+            sb.append(", left=").append(left);
+            sb.append(", right=").append(right);
+            sb.append(", height=").append(height);
+            sb.append('}');
+            return sb.toString();
         }
     }
 
@@ -75,7 +88,7 @@ public class AVLTree<K extends Comparable<K>, V> {
             return node;
         else if (key.compareTo(node.key) < 0)
             return getNode(node.left, key);
-        else    //key.compareTo(node.key) > 0
+        else   //key.compareTo(node.key) > 0
             return getNode(node.right, key);
     }
 
@@ -86,6 +99,54 @@ public class AVLTree<K extends Comparable<K>, V> {
      */
     public boolean contains(K key) {
         return getNode(root, key) != null;
+    }
+
+    /////////////////////////////////////////////////////
+    //     对节点y进行向右旋转操作，返回旋转后新的根节点x    //
+    //        y                              x         //
+    //       / \                           /   \       //
+    //      x   T4     向右旋转 (y)        z     y      //
+    //     / \       - - - - - - - ->    / \   / \     //
+    //    z   T3                       T1  T2 T3 T4    //
+    //   / \                                           //
+    // T1   T2                                         //
+    /////////////////////////////////////////////////////
+    private Node rightRotate(Node y) {
+        //  暂存y的左节点x和x的右节点t3
+        Node x = y.left;
+        Node t3 = x.right;
+        //  让y成为x的右孩子, t3成为y的左孩子
+        x.right = y;
+        y.left = t3;
+        //  更新Height值
+        y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+        x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
+
+        return x;
+    }
+
+    //////////////////////////////////////////////////
+    // 对节点y进行向左旋转操作，返回旋转后新的根节点x    //
+    //    y                             x          //
+    //  /  \                          /   \        //
+    // T1   x      向左旋转 (y)       y     z       //
+    //     / \   - - - - - - - ->   / \   / \      //
+    //   T2   z                    T1 T2 T3 T4     //
+    //       / \                                   //
+    //      T3 T4                                  //
+    /////////////////////////////////////////////////
+    private Node leftRotate(Node y) {
+        //  暂存y的左节点x和x的左孩子t2
+        Node x = y.right;
+        Node t2 = x.left;
+        //  让y成为x的左孩子, t2成为y的右孩子
+        x.left = y;
+        y.right = t2;
+        //  更新Height值
+        y.height = Math.max(getHeight(y.left), getHeight(y.right)) + 1;
+        x.height = Math.max(getHeight(x.left), getHeight(x.right)) + 1;
+
+        return x;
     }
 
     /**
@@ -110,7 +171,7 @@ public class AVLTree<K extends Comparable<K>, V> {
             node.left = add(node.left, key, value);
         else if (key.compareTo(node.key) > 0)
             node.right = add(node.right, key, value);
-        else    //key.compareTo(node.key) = 0
+        else   //key.compareTo(node.key) = 0
             node.value = value;
 
         //  更新高度
@@ -118,9 +179,57 @@ public class AVLTree<K extends Comparable<K>, V> {
 
         //  计算平衡因子
         int banlanceFactor = getBalanceFactor(node);
-        if (Math.abs(banlanceFactor) > 1)
+
+        if (Math.abs(banlanceFactor) > 2)
             System.out.println("不平衡:" + banlanceFactor);
 
+        //  平衡维护:分为四种情况
+        //  LL
+        if (banlanceFactor > 1 && getBalanceFactor(node.left) >= 0)
+            return rightRotate(node);
+
+        //  RR
+        if (banlanceFactor < -1 && getBalanceFactor(node.right) <= 0)
+            return leftRotate(node);
+
+        /////////////////////////////////////////////////////
+        //------------------------LR------------------------|
+        //                                                  |
+        // 对节点x先进行左旋转即转换成LL情况,再对y进行右旋转即可  |
+        //        y                              y          |
+        //       / \                           /   \        |
+        //      x   T4     向左旋转 (x)        z    T4       |
+        //     / \       - - - - - - - ->    / \            |
+        //    T1  z                         x  T3           |
+        //       / \                       / \              |
+        //      T2 T3                     T1 T2             |
+        //                                                  |
+        //------------------------LR------------------------|
+        /////////////////////////////////////////////////////
+        if (banlanceFactor > 1 && getBalanceFactor(node.left) < 0) {
+            node.left = leftRotate(node.left);
+            return rightRotate(node);
+        }
+
+        /////////////////////////////////////////////////////
+        //------------------------RL------------------------|
+        //                                                  |
+        // 对节点x先进行右旋转即转换成RR情况,再对y进行左旋转即可  |
+        //      y                             y             |
+        //    /  \                          /  \            |
+        //   T1   x      向右旋转 (x)       T1   z           |
+        //       / \   - - - - - - - ->        / \          |
+        //      z  T4                         T2  x         |
+        //     / \                               / \        |
+        //    T2 T3                             T3 T4       |
+        //                                                  |
+        //------------------------RL------------------------|
+        /////////////////////////////////////////////////////
+
+        if (banlanceFactor < -1 && getBalanceFactor(node.right) > 0) {
+            node.right = rightRotate(node.right);
+            return leftRotate(node);
+        }
         return node;
     }
 
@@ -151,7 +260,7 @@ public class AVLTree<K extends Comparable<K>, V> {
      */
     public boolean isBST() {
         ArrayList<K> keys = new ArrayList<>();
-        inOrder(root);
+        inOrder(root, keys);
         for (int i = 1; i < keys.size(); i++)
             if (keys.get(i - 1).compareTo(keys.get(i)) > 0)
                 return false;
@@ -165,9 +274,9 @@ public class AVLTree<K extends Comparable<K>, V> {
     private void inOrder(Node node, List list) {
         if (node == null)
             return;
-        inOrder(node.left);
+        inOrder(node.left, list);
         list.add(node.key);
-        inOrder(node.right);
+        inOrder(node.right, list);
     }
 
     /**
@@ -192,84 +301,6 @@ public class AVLTree<K extends Comparable<K>, V> {
         if (Math.abs(balanceFactor) > 1)
             return false;
         return isBalanced(node.left) && isBalanced(node.right);
-    }
-
-    /**
-     * @Description: 前序遍历
-     */
-    public void preOrder() {
-        preOrder(root);
-    }
-
-    private void preOrder(Node node) {
-        if (node == null)
-            return;
-        System.out.println(node.value);
-        preOrder(node.left);
-        preOrder(node.right);
-    }
-
-    /**
-     * @Description: 前序遍历非递归实现
-     */
-    public void preOrderNR() {
-        Stack<Node> stack = new Stack<>();
-        stack.push(root);
-        while (!stack.isEmpty()) {
-            Node cur = stack.pop();
-            System.out.println(cur.value);
-            if (cur.right != null)
-                stack.push(cur.right);
-            if (cur.left != null)
-                stack.push(cur.left);
-        }
-    }
-
-    /**
-     * @Description: 中序遍历
-     */
-    public void inOrder() {
-        inOrder(root);
-    }
-
-    private void inOrder(Node node) {
-        if (node == null)
-            return;
-        inOrder(node.left);
-        System.out.println(node.value);
-        inOrder(node.right);
-    }
-
-    /**
-     * @Description: 后序遍历
-     */
-    public void postOrder() {
-        postOrder(root);
-    }
-
-    private void postOrder(Node node) {
-        if (node == null)
-            return;
-        postOrder(node.left);
-        postOrder(node.right);
-        System.out.println(node.value);
-    }
-
-    /**
-     * @Description: 层序遍历
-     */
-
-    public void levelOrder() {
-        Queue<Node> q = new LinkedList<>();
-        q.add(root);
-        while (!q.isEmpty()) {
-            Node cur = q.remove();
-            System.out.println(cur.value);
-            if (cur.left != null)
-                q.add(cur.left);
-            if (cur.right != null)
-                q.add(cur.right);
-        }
     }
 
     @Override
