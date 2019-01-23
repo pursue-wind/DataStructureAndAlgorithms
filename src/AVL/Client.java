@@ -28,6 +28,11 @@ public class Client {
             System.out.println("freq of prejudice: " + avlTree.get("prejudice"));
             System.out.println("is BST: " + avlTree.isBST());
             System.out.println("is Balanced: " + avlTree.isBalanced());
+            for (String s : wordlist) {
+                avlTree.remove(s);
+                if (!avlTree.isBST() || !avlTree.isBalanced())
+                    throw new RuntimeException("AVL have problem~");
+            }
             System.out.println("----------------pride-and-prejudice----------------");
         }
     }
