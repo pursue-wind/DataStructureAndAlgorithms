@@ -303,6 +303,103 @@ public class AVLTree<K extends Comparable<K>, V> {
         return isBalanced(node.left) && isBalanced(node.right);
     }
 
+    /**
+     * @Description: 返回AVL中的最小的节点
+     * @Param: [node]
+     * @return: Node
+     */
+    private Node minimum(Node node) {
+        if (node.left == null)
+            return node;
+        return minimum(node.left);
+    }
+
+    /**
+     * @Description: 删除AVL中的元素
+     * @Param: [key]
+     */
+    public void remove(K key) {
+        remove(root, key);
+    }
+
+    /**
+     * @Description: 删除以node为根的键为key的元素, 递归算法
+     * @Param: [node, key]
+     * @return: Node
+     */
+    private Node remove(Node node, K key) {
+        if (node == null)
+            return null;
+        Node retNode = null;
+        if (key.compareTo(node.key) < 0) {
+            node.left = remove(node.left, key);
+            retNode = node;
+        } else if (key.compareTo(node.key) > 0) {
+            node.right = remove(node.right, key);
+            retNode = node;
+        }
+        // key.compareTo(node.key) = 0
+        else {
+            //  如果左子树为空时
+            if (node.left == null) {
+                Node rightNode = node.right;
+                node.right = null;
+                size--;
+                retNode = rightNode;
+            }
+            //  如果右子树为空时
+            else if (node.right == null) {
+                Node leftNode = node.left;
+                node.left = null;
+                size--;
+                retNode = leftNode;
+            }
+            //  如果左右子树均不为空时
+            else {
+                //  找到比删除节点大的最小节点_右节点的最小值(左节点的最大值亦可)
+                Node successor = minimum(node.right);
+                //  用找到的节点顶替删除的节点
+                successor.right = remove(node.right, successor.key);//removeMin中有一次size--操作,需要size++
+                successor.left = node.left;
+                node.left = node.right = null;//此操作需要一次size--,与上面操作抵消
+                retNode = successor;
+            }
+        }
+        if (retNode == null)
+            return null;
+        //  更新高度
+        retNode.height = 1 + Math.max(getHeight(retNode.left), getHeight(retNode.right));
+
+        //  计算平衡因子
+        int banlanceFactor = getBalanceFactor(retNode);
+
+        if (Math.abs(banlanceFactor) > 2)
+            System.out.println("retNode不平衡:" + banlanceFactor);
+
+        //  平衡维护:分为四种情况
+        //  LL
+        if (banlanceFactor > 1 && getBalanceFactor(retNode.left) >= 0)
+            return rightRotate(retNode);
+
+        //  RR
+        if (banlanceFactor < -1 && getBalanceFactor(retNode.right) <= 0)
+            return leftRotate(retNode);
+
+        //  LR
+        if (banlanceFactor > 1 && getBalanceFactor(retNode.left) < 0) {
+            retNode.left = leftRotate(retNode.left);
+            return rightRotate(retNode);
+        }
+
+        //  RL
+        if (banlanceFactor < -1 && getBalanceFactor(retNode.right) > 0) {
+            retNode.right = rightRotate(retNode.right);
+            return leftRotate(retNode);
+        }
+        return retNode;
+    }
+
+
     @Override
     public String toString() {
         StringBuffer res = new StringBuffer();
