@@ -264,7 +264,7 @@ public class BST<E extends Comparable<E>> {
      * @Param: [e]
      */
     public void remove(E e) {
-        remove(root, e);
+        root = remove(root, e);
     }
 
     /**
@@ -276,11 +276,13 @@ public class BST<E extends Comparable<E>> {
         if (node == null)
             return null;
         else if (e.compareTo(node.e) < 0) {//   如果e小于节点
-            return remove(node.left, e);
+            node.left = remove(node.left, e);
+            return node;
         }
         //  如果e大于节点
         else if (e.compareTo(node.e) > 0) {
-            return remove(node.right, e);
+            node.right = remove(node.right, e);
+            return node;
         }
         // e.compareTo(node.e) = 0
         else {
@@ -291,6 +293,7 @@ public class BST<E extends Comparable<E>> {
                 size--;
                 return rightNode;
             }
+
             //  如果右子树为空时
             else if (node.right == null) {
                 Node leftNode = node.left;
@@ -298,9 +301,11 @@ public class BST<E extends Comparable<E>> {
                 size--;
                 return leftNode;
             }
+
             //  如果左右子树均不为空时
             //找到比删除节点大的最小节点_右节点的最小值(左节点的最大值亦可)
             Node successor = minimum(node.right);
+
             //用找到的节点顶替删除的节点
             successor.right = removeMin(node.right);//removeMin中有一次size--操作,需要size++
             successor.left = node.left;

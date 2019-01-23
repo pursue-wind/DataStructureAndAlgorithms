@@ -27,7 +27,7 @@ public class Client {
 //        System.out.println();
 //        bst.postOrder();
 //        System.out.println();
-
+        bst.remove(3);
         bst.levelOrder();
         System.out.println();
 
