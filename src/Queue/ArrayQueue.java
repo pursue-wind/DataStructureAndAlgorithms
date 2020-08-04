@@ -19,7 +19,7 @@ public class ArrayQueue<E> implements Queue<E> {
      * @return:
      */
     public ArrayQueue() {
-        array = new Array<>();
+        array = new Array<E>();
     }
 
     /**
@@ -28,7 +28,7 @@ public class ArrayQueue<E> implements Queue<E> {
      * @return:
      */
     public ArrayQueue(int capacity) {
-        array = new Array<>(capacity);
+        array = new Array<E>(capacity);
     }
 
     /**

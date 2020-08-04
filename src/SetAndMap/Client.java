@@ -60,8 +60,39 @@ public class Client {
         System.out.println(testSet(linkedListSet, "src/pride-and-prejudice.txt"));
     }
 
+    public static double testMap(Map<String, Integer> map, String fileName) {
+        long startTime = System.nanoTime();
+        ArrayList<String> wordlist = new ArrayList();
+        if (FileOperation.readFile(fileName, wordlist)) {
+            System.out.println("----------------pride-and-prejudice----------------");
+            System.out.println("Total words: " + wordlist.size());
+            for (String word : wordlist) {
+                if (map.contains(word))
+                    map.set(word, map.get(word) + 1);
+                else
+                    map.add(word, 1);
+            }
+            System.out.println("Total different words: " + map.getSize());
+            System.out.println("freq of pride: " + map.get("pride"));
+            System.out.println("freq of prejudice: " + map.get("prejudice"));
+            System.out.println("----------------pride-and-prejudice----------------");
+        }
+        long endTime = System.nanoTime();
+        return (endTime - startTime) / 1000000000.0;
+    }
+
     @Test
-    public void testMap() {
+    public void testMapTime() {
+        Map<String, Integer> bstMap = new BSTMap<>();
+        Map<String, Integer> linkedListMap = new LinkedListMap<>();
+        double d1 = testMap(bstMap, "src/pride-and-prejudice.txt");
+        double d2 = testMap(linkedListMap, "src/pride-and-prejudice.txt");
+        System.out.println(d1);
+        System.out.println(d2);
+    }
+
+    @Test
+    public void test2() {
         ArrayList<String> wordlist = new ArrayList();
         if (FileOperation.readFile("src/pride-and-prejudice.txt", wordlist)) {
             System.out.println("----------------pride-and-prejudice----------------");
@@ -79,17 +110,13 @@ public class Client {
             System.out.println("freq of prejudice: " + set1.get("prejudice"));
             System.out.println("----------------pride-and-prejudice----------------");
         }
-    }
-
-    @Test
-    public void testLinkedListMap() {
-        ArrayList<String> wordlist = new ArrayList();
-        if (FileOperation.readFile("src/pride-and-prejudice.txt", wordlist)) {
+        ArrayList<String> wordlist2 = new ArrayList();
+        if (FileOperation.readFile("src/pride-and-prejudice.txt", wordlist2)) {
             System.out.println("----------------pride-and-prejudice----------------");
-            System.out.println("Total words: " + wordlist.size());
+            System.out.println("Total words: " + wordlist2.size());
 
             LinkedListMap<String, Integer> set1 = new LinkedListMap<>();
-            for (String word : wordlist) {
+            for (String word : wordlist2) {
                 if (set1.contains(word))
                     set1.set(word, set1.get(word) + 1);
                 else
