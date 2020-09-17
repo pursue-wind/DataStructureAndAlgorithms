@@ -20,41 +20,37 @@ import java.util.*;
  * [3,1,2],
  * [3,2,1]
  * ]
- * =====================================================
- *
- * @author Mireal
  */
 public class LeetCode_46_Permutations {
+
     public List<List<Integer>> permute(int[] nums) {
         int len = nums.length;
-        List<List<Integer>> res = new ArrayList<>();
-        if (len == 0) return res;
+        List<List<Integer>> res = new LinkedList<>();
         boolean[] used = new boolean[len];
-        Deque<Integer> path = new LinkedList<>();
-        dfs(nums, res, used, path);
+        help(res, nums, new LinkedList<>(), 0, used);
         return res;
     }
 
-    private void dfs(int[] nums, List<List<Integer>> res, boolean[] used, Deque<Integer> path) {
-        if (path.size() == nums.length) {
-            res.add(new ArrayList<>(path));
+    private void help(List<List<Integer>> res, int[] nums, LinkedList<Integer> list, int index, boolean[] used) {
+        if (index == nums.length) {
+            res.add(new ArrayList<>(list));
             return;
         }
 
         for (int i = 0; i < nums.length; i++) {
-            if (used[i]) continue;
-
-            path.add(nums[i]);
-            used[i] = true;
-            dfs(nums, res, used, path);
-            used[i] = false;
-            path.removeLast();
+            if (!used[i]) {
+                list.addLast(nums[i]);
+                used[i] = true;
+                help(res, nums, list, index + 1, used);
+                list.removeLast();
+                used[i] = false;
+            }
         }
     }
 
 
     public static void main(String[] args) {
-        int[] nums = {1, 2, 3, 4};
+        int[] nums = {1, 2, 3};
         List<List<Integer>> lists = new LeetCode_46_Permutations().permute(nums);
         System.out.println(lists);
     }

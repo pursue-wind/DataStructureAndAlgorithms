@@ -39,6 +39,14 @@ public class LeetCode_70_Climbing_Stairs {
             }
             return res;
         }
+
+        public int climbStairs2(int n) {
+            if (n < 2) return 1;
+            int[] res = new int[n + 1];
+            if (res[n] != 0)
+                res[n] = climbStairs2(n - 1) + climbStairs2(n - 2);
+            return res[n];
+        }
     }
 
     public static void main(String[] args) {

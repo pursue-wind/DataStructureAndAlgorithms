@@ -26,12 +26,16 @@ public class LeetCode_112_Path_Sum {
         TreeNode(int x) { val = x; }
     }
 
-class Solution {
-    public boolean hasPathSum(TreeNode root, int sum) {
-        if(root == null) return false;
-        return (root.left == null && root.right == null) ? sum == root.val : hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+    class Solution {
+        public boolean hasPathSum(TreeNode root, int sum) {
+            if (root == null) return false;
+            return (root.left == null && root.right == null) ? sum == root.val : hasPathSum(root.left, sum - root.val) || hasPathSum(root.right, sum - root.val);
+        }
     }
-}
+
+    public static void main(String[] args) {
+        System.out.println(1 << 30);
+    }
 }
 //Python3
 //class Solution:

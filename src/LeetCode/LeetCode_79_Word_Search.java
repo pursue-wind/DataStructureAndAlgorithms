@@ -33,7 +33,6 @@ public class LeetCode_79_Word_Search {
 
         public boolean exist(char[][] board, String word) {
             m = board.length - 1;
-            assert board.length > 0;
             n = board[0].length - 1;
             HashMap<Character, Integer> map = new HashMap<Character, Integer>(word.length());
             for (int i = 0; i < word.length(); i++) {
@@ -71,7 +70,7 @@ public class LeetCode_79_Word_Search {
                 for (int i = 0; i < 4; i++) {
                     int newX = x + p[i][0];
                     int newY = y + p[i][1];
-                    if (inAera(newX, newY) && !visited[newX][newY] && wordSearch(board, word, index + 1, newX, newY))
+                    if (inArea(newX, newY) && !visited[newX][newY] && wordSearch(board, word, index + 1, newX, newY))
                         return true;
                 }
                 visited[x][y] = false;
@@ -79,7 +78,7 @@ public class LeetCode_79_Word_Search {
             return false;
         }
 
-        private boolean inAera(int x, int y) {
+        private boolean inArea(int x, int y) {
             return x >= 0 && y >= 0 && x <= m && y <= n;
         }
     }
